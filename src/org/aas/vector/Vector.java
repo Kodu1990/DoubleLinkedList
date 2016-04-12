@@ -6,7 +6,7 @@
 package org.aas.vector;
 
 import java.util.NoSuchElementException;
-import java.lang.IndexOutOfBoundsException;
+
 
 
 /**
@@ -16,18 +16,18 @@ import java.lang.IndexOutOfBoundsException;
  */
 public class Vector<E> {
     
-    private class VectorNode {
+    private class Node {
          E data;
-         VectorNode next;
-         VectorNode prev;
+         Node next;
+         Node prev;
 
    
-        public VectorNode(E data, VectorNode next, VectorNode prev){
+        public Node(E data, Node next, Node prev){
             this.data = data;
             this.next = next;
             this.prev = prev;
         }
-        public VectorNode(E data){
+        public Node(E data){
             this.data = data;
             this.next = null;
             this.prev = null;
@@ -39,8 +39,8 @@ public class Vector<E> {
          }
     }
     
-    private VectorNode head;    
-    private VectorNode tail;
+    private Node head;    
+    private Node tail;
     private static int size;
     /**
      *  base constructor
@@ -52,19 +52,20 @@ public class Vector<E> {
     }
     /**
      * constructor to initialize head/tail
-     * @param data E 
+     * @param E data  
      */
     public Vector(E data){
-        this.head = new VectorNode(data,null,null);
+        this.head = new Node(data,null,null);
         this.tail =head;
         Vector.size = 1;
     }
     /**
      * add element to front of list
-     * @param element 
+     * O(1)
+     * @param E element 
      */
     public void addFirst(E element){
-        VectorNode temp = new VectorNode(element,head,null);
+        Node temp = new Node(element,head,null);
         if(head != null) 
            head.prev =temp;
         
@@ -77,10 +78,11 @@ public class Vector<E> {
     }
     /**
      * add element to end of list
+     * O(1)
      * @param element  
      */
     public void addLast(E element){
-        VectorNode temp = new VectorNode(element,null,tail);
+        Node temp = new Node(element,null,tail);
         if(tail != null) 
            tail.next =temp;
         
@@ -92,13 +94,14 @@ public class Vector<E> {
         size++;
     }
     /**
-     * add element to list
-     * @param element
-     * @param index 
+     * add element to list at index
+     * O(n)
+     * @param E element
+     * @param int index 
      */
     public void addAtIndex(E element, int index){
-        VectorNode temp =  new VectorNode(element);
-        VectorNode current = head;
+        Node temp =  new Node(element);
+        Node current = head;
         if(index <=0 || index > this.size()) 
             throw new IndexOutOfBoundsException();
         if(current != null){
@@ -111,7 +114,7 @@ public class Vector<E> {
             tail = temp;
         }        
         else{
-            head = new VectorNode(element);
+            head = new Node(element);
             tail = head;
         }
                     
@@ -145,15 +148,15 @@ public class Vector<E> {
        return this.tail.data;
     }
     /**
-     * 
+     * retrieves the data element at index and removes it(pretty useless for dll)
      * @param index
-     * @return 
+     * @return true ? false
      */
     public boolean removeAtIndex(int index){
         if(index <=0 || index >Vector.size)
             throw new IndexOutOfBoundsException();
                    
-        VectorNode current = head;
+        Node current = head;
         if(current != null){
             for(int i =1; i<index ; i++){
                 if(current.next==null)
@@ -170,34 +173,48 @@ public class Vector<E> {
         }
         return false;
     }
+    /**
+     * pops the first element off the list
+     * O(1)
+     * @return E data
+     */
     public E popFirstElement(){
         if (size == 0) 
             throw new NoSuchElementException();
         
-        VectorNode tmp = head;
+        Node tmp = head;
         head = head.next;
         head.prev = null;
         size --;
         return tmp.data;
 
     }
-    
+    /**
+     * pops the last element off the list
+     * O(1)
+     * @return E element
+     */
     public E popLastElement(){
         if(size == 0) 
             throw new NoSuchElementException();
         
-        VectorNode tmp = tail;
+        Node tmp = tail;
         tail = tail.prev;
         tail.next = null;
         size --;
         return tmp.data;
     }
-    
+    /**
+     * retrieves the data element at index 
+     * O(n)
+     * @param int index
+     * @return E element
+     */
     public E get (int index){
         if(index <=0 || index >Vector.size)
             throw new IndexOutOfBoundsException();
         
-        VectorNode current = null;
+        Node current = null;
         if(head !=null){
             current = head.next;
             for(int i= 0; i < index; i++){
@@ -211,12 +228,15 @@ public class Vector<E> {
         }
         return null;
     }
-    
+    /**
+     * 
+     * @return string representation of list
+     */
     @Override
     public String toString(){
         String output = "";
 	if (head != null) {
-            VectorNode current = head;
+            Node current = head;
             while (current != null) {
 		output += "[" + current.data.toString() + "]";
                 current = current.next;
