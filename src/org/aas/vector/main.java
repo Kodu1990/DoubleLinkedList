@@ -10,18 +10,19 @@ package org.aas.vector;
  * @author Adam
  */
 public class main {
-     public static void main(String[] args) {
-         Integer one = 1;
-         Integer two = 2; 
-         Integer three = 3;
-         Integer four = 4;
-         Vector<Integer> v = new Vector();
-         v.addFirst(one);
-         v.addLast(two);
-         v.addLast(three);
-         v.addLast(four);
-         
-         System.out.println(v.toString());
-         System.out.println(" popped val : "+v.popFirstElement());
-     }
+    public static void main(String[]args){
+        Vector<Integer> v = new Vector();
+        Integer one = 1;
+        Integer two = 2;
+        Integer three = 3;
+        Integer four = 4; 
+        v.addFirst(one);
+        v.addFirst(two);
+        v.addFirst(three);
+        v.addFirst(four);
+        
+        System.out.println(v);
+        v.addAtIndex(one, 2);
+        System.out.println(v);
+    }
 }

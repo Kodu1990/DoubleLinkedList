@@ -108,14 +108,15 @@ public class Vector<E> {
             for (int i = 1 ; i< index && current.next != null ; i++){
                 current = current.next;
             }
-            temp.next = current.next;
-            temp.prev = current;
-            current.next =temp;
-            tail = temp;
+            temp.next = current;
+            temp.prev = current.prev;
+            current.prev.next = temp;
+            size++;
         }        
         else{
             head = new Node(element);
             tail = head;
+            size++;
         }
                     
     }
@@ -215,7 +216,7 @@ public class Vector<E> {
             throw new IndexOutOfBoundsException();
         
         Node current = null;
-        if(head !=null){
+        if(!isEmpty()){
             current = head.next;
             for(int i= 0; i < index; i++){
                 if(current.next == null)
@@ -243,9 +244,5 @@ public class Vector<E> {
             }
 	}
 	return output;
-    }
-
-
-
-    
+    }    
 }
