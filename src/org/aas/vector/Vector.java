@@ -14,9 +14,11 @@ import java.util.NoSuchElementException;
  * @author Adam
  * @param <E>
  */
-public class Vector<E> {
-    
-    private class Node {
+public class Vector<E> implements DoubleLinkedList<E>{
+
+
+   
+    protected class Node {
          E data;
          Node next;
          Node prev;
@@ -34,14 +36,14 @@ public class Vector<E> {
         }
       
         @Override
-         public String toString(){
-            return data.toString();
-         }
+         public String toString(){ return data.toString(); }
     }
+       
+    protected Node head;    
+    protected Node tail;
     
-    private Node head;    
-    private Node tail;
     private static int size;
+
     /**
      *  base constructor
      */
@@ -52,7 +54,7 @@ public class Vector<E> {
     }
     /**
      * constructor to initialize head/tail
-     * @param E data  
+     * @param  data  
      */
     public Vector(E data){
         this.head = new Node(data,null,null);
@@ -62,8 +64,9 @@ public class Vector<E> {
     /**
      * add element to front of list
      * O(1)
-     * @param E element 
+     * @param  element 
      */
+    
     public void addFirst(E element){
         Node temp = new Node(element,head,null);
         if(head != null) 
@@ -81,7 +84,8 @@ public class Vector<E> {
      * O(1)
      * @param element  
      */
-    public void addLast(E element){
+    @Override
+    public void add(E element){
         Node temp = new Node(element,null,tail);
         if(tail != null) 
            tail.next =temp;
@@ -96,8 +100,8 @@ public class Vector<E> {
     /**
      * add element to list at index
      * O(n)
-     * @param E element
-     * @param int index 
+     * @param element
+     * @param index 
      */
     public void addAtIndex(E element, int index){
         Node temp =  new Node(element);
@@ -120,40 +124,17 @@ public class Vector<E> {
         }
                     
     }
-    /**
-     * 
-     * @return size
-     */
-    public int size(){
-        return Vector.size;
-    }
-    /**
-     * 
-     * @return size == 0
-     */
-    public boolean isEmpty(){
-        return size == 0;
-    }
-    /**
-     * returns the data element at the head of the list
-     * @return head.data
-     */      
-    public E getHead(){
-        return this.head.data;
-    }
-    /**
-     * returns the data element at the tail of the list
-     * @return tail.data
-     */
-    public E getTail(){
-       return this.tail.data;
+    @Override
+    public void addAll(Vector<? extends E> c) {
+       while(!c.isEmpty())
+           this.add(c.popFirstElement());
     }
     /**
      * retrieves the data element at index and removes it(pretty useless for dll)
      * @param index
      * @return true ? false
      */
-    public boolean removeAtIndex(int index){
+    public boolean remove(int index){
         if(index <=0 || index >Vector.size)
             throw new IndexOutOfBoundsException();
                    
@@ -191,6 +172,18 @@ public class Vector<E> {
 
     }
     /**
+     * pops a node's data element off the list
+     * @param node that is popped
+     * @return E data
+     */
+    public E popElement(Node node){
+        Node temp = node;
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+        size --;
+        return (E) temp.data;
+    }
+    /**
      * pops the last element off the list
      * O(1)
      * @return E element
@@ -208,9 +201,10 @@ public class Vector<E> {
     /**
      * retrieves the data element at index 
      * O(n)
-     * @param int index
+     * @param index
      * @return E element
      */
+    @Override
     public E get (int index){
         if(index <=0 || index >Vector.size)
             throw new IndexOutOfBoundsException();
@@ -229,6 +223,15 @@ public class Vector<E> {
         }
         return null;
     }
+    
+    @Override
+    public void reverse(){
+        int count= 0;
+        while(count <= size()){
+            addFirst(popLastElement());
+            count++;
+        }
+    }
     /**
      * 
      * @return string representation of list
@@ -244,5 +247,35 @@ public class Vector<E> {
             }
 	}
 	return output;
-    }    
+    }
+    
+    @Override
+    public Iterator<E> reverseItr() { return new Iterator(this,Iterator.Direction.REVERSE); }
+    
+    @Override
+    public Iterator iterator() { return new Iterator(this,Iterator.Direction.FORWARD); }
+    /**
+     * returns the data element at the head of the list
+     * @return head.data
+     */    
+    @Override
+    public E getHead(){ return this.head.data;}
+    /**
+     * returns the data element at the tail of the list
+     * @return tail.data
+     */
+    @Override
+    public E getTail() { return this.tail.data;}    
+    /**
+     * 
+     * @return size
+     */
+    @Override
+    public int size(){ return Vector.size; }
+    /**
+     * 
+     * @return size == 0
+     */
+    @Override
+    public boolean isEmpty(){ return size == 0; }
 }

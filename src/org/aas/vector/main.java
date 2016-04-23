@@ -16,10 +16,10 @@ public class main {
         Integer two = 2;
         Integer three = 3;
         Integer four = 4; 
-        v.addFirst(one);
-        v.addFirst(two);
-        v.addFirst(three);
-        v.addFirst(four);
+        v.add(one);
+        v.add(two);
+        v.add(three);
+        v.add(four);
         
         System.out.println(v);
         v.addAtIndex(one, 2);

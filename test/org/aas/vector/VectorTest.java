@@ -27,10 +27,10 @@ public class VectorTest {
         Integer element = 1;
         Vector instance = new Vector();
         
-        instance.addFirst(element);
+        instance.add(element);
         assertEquals(instance.size(),1);
         
-        instance.addFirst(element);
+        instance.add(element);
         assertEquals(instance.size(),2);
 
     }
@@ -39,15 +39,15 @@ public class VectorTest {
      * Test of addLast method, of class Vector.
      */
     @Test
-    public void testAddLast() {
-        System.out.println("addLast");
+    public void testAdd() {
+        System.out.println("add");
         Integer element = 1;
         Vector instance = new Vector();
         
-        instance.addLast(element);
+        instance.add(element);
         assertEquals(instance.size(),1);
         
-        instance.addLast(element);
+        instance.add(element);
         assertEquals(instance.size(),2);
     }
 
@@ -64,8 +64,8 @@ public class VectorTest {
         instance.addAtIndex(one, index);        
         assertEquals(0,instance.size());
             
-        instance.addFirst(one);
-        instance.addFirst(one);
+        instance.add(one);
+        instance.add(one);
         instance.addAtIndex(two, 2);
         assertEquals(3,instance.size());
         assertEquals(one,instance.getHead());
@@ -140,12 +140,12 @@ public class VectorTest {
         Integer two = 2;
         Integer three = 3;
         
-        instance.addFirst(one);
-        instance.addFirst(two);
-        instance.addFirst(three);
+        instance.add(one);
+        instance.add(two);
+        instance.add(three);
         
-        instance.removeAtIndex(index);
-        assertTrue(instance.removeAtIndex(2));
+        instance.remove(index);
+        assertTrue(instance.remove(2));
         assertEquals(2,instance.size());
         assertEquals(three,instance.getHead());
         assertEquals(one,instance.getTail());
@@ -165,9 +165,9 @@ public class VectorTest {
         Integer one = 1;
         Integer two = 2;
         Integer three = 3;
-        instance.addFirst(one);
-        instance.addFirst(two);
-        instance.addFirst(three);
+        instance.add(one);
+        instance.add(two);
+        instance.add(three);
         
         assertEquals(three, instance.popFirstElement());
         // TODO review the generated test code and remove the default call to fail.
@@ -185,9 +185,9 @@ public class VectorTest {
         Integer one = 1;
         Integer two = 2;
         Integer three = 3;
-        instance.addFirst(one);
-        instance.addFirst(two);
-        instance.addFirst(three);
+        instance.add(one);
+        instance.add(two);
+        instance.add(three);
         
         assertEquals(one, instance.popLastElement());
         // TODO review the generated test code and remove the default call to fail.
@@ -209,9 +209,9 @@ public class VectorTest {
         instance.addAtIndex(one, index);        
         assertEquals(0,instance.size());
                       
-        instance.addFirst(one);
-        instance.addFirst(two);
-        instance.addFirst(three);
+        instance.add(one);
+        instance.add(two);
+        instance.add(three);
         
         assertEquals(one,instance.get(3));
         assertEquals(two,instance.get(2));
