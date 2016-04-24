@@ -8,6 +8,7 @@ package org.aas.vector;
 import java.util.NoSuchElementException;
 import org.aas.vector.Vector.Node;
 
+
 /**
  *
  * @author Adam
@@ -39,14 +40,17 @@ public class Iterator<E> implements DoubleLinkedListIterator<E>{
         public E next() {
             if(hasNext())
                 current = current.next;
-            throw new NoSuchElementException();
+            
+            else throw new NoSuchElementException();
+            
+            return (E) current.data;
         }
         
         @Override
         public int nextIndex() { 
             if(!hasNext())
                 return index;
-            return index++; 
+            return index+1; 
         }
         
         @Override
@@ -56,14 +60,17 @@ public class Iterator<E> implements DoubleLinkedListIterator<E>{
         public E previous() {
             if(hasPrevious())
                 current = current.prev;
-            throw new NoSuchElementException();            
+            
+            else throw new NoSuchElementException();
+            
+            return (E) current.data;
         }
 
         @Override
         public int previousIndex() {
            if(!hasPrevious())
                return -1;
-           return index--;
+           return index-1;
         }
 
         @Override
@@ -71,6 +78,9 @@ public class Iterator<E> implements DoubleLinkedListIterator<E>{
 
         @Override
         public void add(E element) {
+            if(index ==0 || index == List.size()+1)
+                throw new IllegalStateException();
+            
             List.addAtIndex(element, index);
             index ++;
         }
@@ -85,7 +95,9 @@ public class Iterator<E> implements DoubleLinkedListIterator<E>{
         
         public E popElement() {
             index --;
-            return (E) List.popElement(current);        
+            Node temp = current;
+            current = current.prev;
+            return (E) List.popElement(temp);        
         }
 }
         

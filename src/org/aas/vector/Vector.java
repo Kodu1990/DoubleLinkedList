@@ -67,6 +67,7 @@ public class Vector<E> implements DoubleLinkedList<E>{
      * @param  element 
      */
     
+    @Override
     public void addFirst(E element){
         Node temp = new Node(element,head,null);
         if(head != null) 
